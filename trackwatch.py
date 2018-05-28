@@ -20,7 +20,7 @@ def print_marks(min_pace, max_pace, track_length):
         clocktime = get_pretty_time(delta)
         sys.stdout.write(f'\r{clocktime}{paces}')
         sys.stdout.flush()
-        time.sleep(0.1)
+        time.sleep(0.250)
 
 
 def get_boundaries(total_time, min_pace, max_pace, length):
