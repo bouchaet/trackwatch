@@ -3,13 +3,13 @@ import time
 
 
 def print_marks(min_pace, max_pace, track_length):
-    '''Print running marks based on the elapse time'''
+    '''Print running marks based on the elapsed time'''
     start_time = time.time()
     while True:
         delta = time.time() - start_time
 
         paces = ""
-        for mark in get_boundaries(
+        for mark in get_marks(
                         delta,
                         min_pace,
                         max_pace,
@@ -23,7 +23,7 @@ def print_marks(min_pace, max_pace, track_length):
         time.sleep(0.250)
 
 
-def get_boundaries(total_time, min_pace, max_pace, length):
+def get_marks(total_time, min_pace, max_pace, length):
     '''Get significant distances'''
     quarter = length / 4
     if total_time < max_pace * (quarter / 1000) * 60:
@@ -32,19 +32,19 @@ def get_boundaries(total_time, min_pace, max_pace, length):
     min_dist = total_time / (min_pace * 60) * 1000 
     max_dist = total_time / (max_pace * 60) * 1000
 
-    boundaries = []
+    marks = []
     done = False
     mark = min_dist - min_dist % quarter
     while not done:
         mark += quarter
         if mark > min_dist and mark < max_dist and is_std(mark, length):
-            boundaries.append(mark)
+            marks.append(mark)
         elif mark >= max_dist:
             if get_pace(total_time, mark) >= max_pace:
-                boundaries.append(mark)
+                marks.append(mark)
             done = True
 
-    return boundaries
+    return marks
 
 
 def is_std(distance, track_length):
